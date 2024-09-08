@@ -1,0 +1,137 @@
+/**
+ * dawn2 项目管理
+ */
+
+
+//buildscript {
+//    repositories {
+//        mavenLocal()
+//    }
+//    dependencies {
+//        classpath(
+//                'org.springframework.boot:spring-boot-gradle-plugin:3.3.3',
+//        )
+//    }
+//}
+
+//gradle 插件
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+
+//项目group
+//group = 'com._54year'
+//version = '1.0.0'
+
+//java 版本设置
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+//ext {
+//    set('springCloudVersion', '2023.0.3')
+//}
+apply {
+    from('config.gradle')
+}
+
+//所有项目/子模块通用配置
+//必须要有该配置
+allprojects {
+    group = 'com._54year'
+    //引用插件
+    apply {
+        plugin('java')
+        plugin('org.springframework.boot')
+        plugin('io.spring.dependency-management')
+    }
+
+    //gradle 配置
+    configurations {
+        //仅运行时生效
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    //仓库配置
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+//子模块/项目统一配置
+subprojects {
+    // 子模块依赖,类似于maven的dependencies标签
+    //子项目强制依赖
+    dependencies {
+        //spring cloud starter
+        implementation('org.springframework.cloud:spring-cloud-starter')
+        //lombok
+        implementation('org.projectlombok:lombok')
+
+
+//        runtimeOnly 'com.mysql:mysql-connector-j'
+//        runtimeOnly 'org.postgresql:postgresql'
+//        annotationProcessor 'org.projectlombok:lombok'
+
+        //测试-引用 spring boot starter test
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+        //测试时-引用 mybatis test
+//        testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:${version.mybatisVersion}'
+        //测试时-运行 生效
+        testRuntimeOnly('org.junit.platform:junit-platform-launcher')
+
+
+    }
+
+    // 子模块依赖,类似于maven的dependencyManagement标签
+    //子模块选择性依赖
+    dependencyManagement {
+        // spring cloud依赖管理插件
+        imports {
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:${rootProject.ext.version.springCloudVersion}")
+        }
+
+        //不受spring cloud管理的第三方依赖
+        dependencies {
+            for (otherJar in rootProject.ext.otherDependencies) {
+                dependency(otherJar.value)
+            }
+
+            /*
+            spring 相关
+             */
+//            //springboot oauth2 模块
+//            dependency 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
+//            //springboot web模块
+//            dependency 'org.springframework.boot:spring-boot-starter-web'
+//            //SpringCloud 网关模块
+//            dependency 'org.springframework.cloud:spring-cloud-starter-gateway-mvc'
+//            //mybatis 模块
+//            dependency 'org.mybatis.spring.boot:mybatis-spring-boot-starter:${version.mybatisVersion}'
+//            // mysql驱动
+//            dependency 'com.mysql:mysql-connector-j'
+//            // pgsql驱动
+//            dependency 'org.postgresql:postgresql'
+//            //mybatis plus
+//            dependency('com.baomidou:mybatis-plus-spring-boot3-starter:3.5.7')
+        }
+
+    }
+
+    //测试任务
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+}
+
+
+
+

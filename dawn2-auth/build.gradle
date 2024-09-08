@@ -1,0 +1,7 @@
+//该模块版本
+version = '1.0.0'
+
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-oauth2-authorization-server')
+    implementation(project(':dawn2-db'))
+}

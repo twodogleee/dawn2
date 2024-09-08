@@ -1,0 +1,11 @@
+//该模块版本
+version = '1.0.0'
+
+dependencies {
+    implementation('com.baomidou:mybatis-plus-spring-boot3-starter')
+//     {
+//        exclude(group: 'com.baomidou', module: 'mybatis-plus-generator')
+//    }
+    implementation('com.mysql:mysql-connector-j')
+    implementation('com.baomidou:dynamic-datasource-spring-boot3-starter')
+}

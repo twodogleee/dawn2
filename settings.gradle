@@ -1,0 +1,22 @@
+/**
+ * gradle 项目配置
+ */
+rootProject.name = 'dawn2'
+
+//指定项目别名
+//include('project-a')
+//project(':project-a').projectDir = file('custom/my-project-a')
+//project(':project-a').buildFileName = 'project-a.gradle'
+
+//指定项目路径
+//include(':my-web-module')
+//project(':my-web-module').projectDir = "subs/web/my-web-module"
+
+//引入子模块
+include(':dawn2-gateway')
+
+//include(':dawn2-common:dawn2-db')
+include(':dawn2-db')
+project(':dawn2-db').projectDir = file("dawn2-common/dawn2-db")
+
+include(':dawn2-auth')
