@@ -1,9 +1,16 @@
 HELP.md
 .gradle
 build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+
+# 忽略gradle相关文件
+gradle/wrapper/*
+# gradle运行程序 保证编译得时候使用的是同一个gradle版本
+!gradlew
+!gradlew.bat
+
+# 忽略build文件
+**/src/main/**/build/
+**/src/test/**/build/
 
 ### STS ###
 .apt_generated

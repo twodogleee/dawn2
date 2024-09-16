@@ -1,0 +1,16 @@
+version = '0.0.1-SNAPSHOT'
+
+dependencies {
+    //代码生成器
+    implementation('com.baomidou:mybatis-plus-generator')
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    //sf4j依赖
+    implementation('org.slf4j:slf4j-api:2.0.16')
+    //plus驱动
+    implementation('com.baomidou:mybatis-plus-spring-boot3-starter')
+    //数据库驱动
+    implementation('com.mysql:mysql-connector-j')
+    // https://mvnrepository.com/artifact/org.freemarker/freemarker
+    //代码生成模板引擎
+    implementation('org.freemarker:freemarker:2.3.33')
+}

@@ -13,10 +13,18 @@ rootProject.name = 'dawn2'
 //project(':my-web-module').projectDir = "subs/web/my-web-module"
 
 //引入子模块
+//网关
 include(':dawn2-gateway')
+//认证中心
+include(':dawn2-auth')
+//代码生成器
+include(':dawn2-generator')
 
 //include(':dawn2-common:dawn2-db')
+//通用模块
 include(':dawn2-db')
-project(':dawn2-db').projectDir = file("dawn2-common/dawn2-db")
+project(':dawn2-db').projectDir = file('dawn2-common/dawn2-db')
+include(':dawn2-core')
+project(':dawn2-core').projectDir = file('dawn2-common/dawn2-core')
 
-include(':dawn2-auth')
+

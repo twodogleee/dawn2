@@ -1,0 +1,50 @@
+spring:
+  datasource:
+  #  单数据源配置
+    #    username: root
+    #    password: test
+    #    driver-class-name: com.mysql.cj.jdbc.Driver
+    #    url: jdbc:mysql://192.168.5.55:9001
+    #    hikari:
+    #      # 是否自动提交事务 默认为true
+    #      auto-commit: true
+    #      # 测试连接查询语句
+    #      connection-test-query: select 1
+    #      # 获取数据库连接超时时间,默认30秒,单位:秒
+    #      connection-timeout: 3000
+    #      # 连接在连接池保持空闲得最长时间,默认10分钟,单位:秒
+    #      idle-timeout: 30000
+    #      # 连接在连接池种允许存在的最长时间,默认30分钟,单位:秒
+    #      max-lifetime: 1800000
+    #      # 连接池最大连接数,默认为10
+    #      maximum-pool-size: 15
+    #      # 连接池最小空闲连接数,默认10
+    #      minimum-idle: 5
+    #      # 连接池名称
+    #      pool-name: dawn2
+    #      # 连接认证超时时间,默认5秒,单位:秒
+
+    # 多数据源配置
+    dynamic:
+      hikari:
+        is-auto-commit: true
+        connection-test-query: select 1
+        connection-timeout: 3000
+        idle-timeout: 30000
+        max-lifetime: 1800000
+        max-pool-size: 15
+        minimum-idle: 5
+
+      datasource:
+        test1:
+          url: jdbc:mysql://192.168.5.55:9001/bdwp
+          username: root
+          password: test
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        test2:
+          url: jdbc:mysql://192.168.5.55:9001/bdwp
+          username: root
+          password: test
+          driver-class-name: com.mysql.cj.jdbc.Driver
+
+

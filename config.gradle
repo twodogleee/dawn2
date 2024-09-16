@@ -3,15 +3,25 @@
 
 ext {
     version = [
-            "springCloudVersion": "2023.0.0",
+            //spring cloud
+            "springCloudVersion"  : "2023.0.0",
 //            "mybatisVersion"    : "3.0.3",
-            "mybatisPlusVersion": "3.5.7",
-            "dynamicDatasource" : "4.3.1"
+            //mybatis plus插件
+            "mybatisPlusVersion"  : "3.5.7",
+            //mybatis plus 动态数据源
+            "dynamicDatasource"   : "4.3.1",
+            //mybatis plus 代码生成器
+            "mybatisPlusGenerator": "3.5.7",
+            //阿里json工具
+            "fastJson2"           : "2.0.52"
     ]
 
     otherDependencies = [
+            "mybatisPlus"         : "com.baomidou:mybatis-plus-spring-boot3-starter:${version.mybatisPlusVersion}",
+            "dynamicDatasource"   : "com.baomidou:dynamic-datasource-spring-boot3-starter:${version.dynamicDatasource}",
+            "mybatisPlusGenerator": "com.baomidou:mybatis-plus-generator:${version.mybatisPlusGenerator}"
 //            "mybatis"    : "org.mybatis.spring.boot:mybatis-spring-boot-starter:${version.mybatisVersion}",
-"mybatisPlus"      : "com.baomidou:mybatis-plus-spring-boot3-starter:${version.mybatisPlusVersion}",
-"dynamicDatasource": "com.baomidou:dynamic-datasource-spring-boot3-starter:${version.dynamicDatasource}"
+
+
     ]
 }

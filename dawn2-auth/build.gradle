@@ -2,6 +2,13 @@
 version = '1.0.0'
 
 dependencies {
-    implementation('org.springframework.boot:spring-boot-starter-oauth2-authorization-server')
     implementation(project(':dawn2-db'))
+    implementation(project(':dawn2-core'))
+    //基本类
+    implementation('org.springframework.cloud:spring-cloud-starter')
+    //认证服务器
+    implementation('org.springframework.boot:spring-boot-starter-oauth2-authorization-server')
+    //页面渲染
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+//    implementation('org.springframework.boot:spring-boot-starter-web')
 }

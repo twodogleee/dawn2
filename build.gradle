@@ -19,6 +19,8 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.0'
     id 'io.spring.dependency-management' version '1.1.6'
+    //java包管理插件 没有这个插件就没有api命令
+    id 'java-library'
 }
 
 
@@ -49,15 +51,17 @@ allprojects {
         plugin('java')
         plugin('org.springframework.boot')
         plugin('io.spring.dependency-management')
+        //java包管理插件
+        plugin('java-library')
     }
 
     //gradle 配置
-    configurations {
-        //仅运行时生效
-        compileOnly {
-            extendsFrom annotationProcessor
-        }
-    }
+//    configurations {
+//        //仅运行时生效
+//        compileOnly {
+//            extendsFrom annotationProcessor
+//        }
+//    }
 
     //仓库配置
     repositories {
@@ -71,10 +75,13 @@ subprojects {
     // 子模块依赖,类似于maven的dependencies标签
     //子项目强制依赖
     dependencies {
-        //spring cloud starter
-        implementation('org.springframework.cloud:spring-cloud-starter')
         //lombok
         implementation('org.projectlombok:lombok')
+        annotationProcessor('org.projectlombok:lombok')
+        //lang3工具类
+        implementation('org.apache.commons:commons-lang3')
+        //ali json工具
+        implementation("com.alibaba.fastjson2:fastjson2:${rootProject.ext.version.fastJson2}")
 
 
 //        runtimeOnly 'com.mysql:mysql-connector-j'
@@ -129,6 +136,10 @@ subprojects {
     //测试任务
     tasks.named('test') {
         useJUnitPlatform()
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
     }
 }
 

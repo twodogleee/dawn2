@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>自定义同意页面 - 需要同意</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function cancelConsent() {
+            document.consent_form.reset();
+            document.consent_form.submit();
+        }
+    </script>
+</head>
+<body>
+<div class="container py-5">
+    <div class="row">
+        <div class="col text-center">
+            <h1 class="text-primary">应用权限</h1>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col text-center">
+            <p>
+                应用程序
+                <span class="fw-bold text-primary" th:text="${clientId}"></span>
+                想要访问您的账户
+                <span class="fw-bold" th:text="${principalName}"></span>
+            </p>
+        </div>
+    </div>
+    <div th:if="${userCode}" class="row">
+        <div class="col text-center">
+            <p class="alert alert-warning">
+                您已提供代码
+                <span class="fw-bold" th:text="${userCode}"></span>。
+                请验证此代码是否与您的设备上显示的代码匹配。
+            </p>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col text-center">
+            <p>
+                上述应用程序请求以下权限。<br/>
+                请查看并同意，如果您批准。
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <form name="consent_form" method="post" th:action="${requestURI}" class="needs-validation" novalidate>
+                <input type="hidden" name="client_id" th:value="${clientId}">
+                <input type="hidden" name="state" th:value="${state}">
+                <input th:if="${userCode}" type="hidden" name="user_code" th:value="${userCode}">
+
+                <div th:each="scope: ${scopes}" class="form-check py-1">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           name="scope"
+                           th:value="${scope.scope}"
+                           th:id="${scope.scope}">
+                    <label class="form-check-label fw-bold px-2" th:for="${scope.scope}"
+                           th:text="${scope.scope}"></label>
+                    <p class="text-primary" th:text="${scope.description}"></p>
+                </div>
+
+                <p th:if="${not #lists.isEmpty(previouslyApprovedScopes)}">
+                    您已授予上述应用程序以下权限：
+                </p>
+                <div th:each="scope: ${previouslyApprovedScopes}" class="form-check py-1">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           th:id="${scope.scope}"
+                           disabled
+                           checked>
+                    <label class="form-check-label fw-bold px-2" th:for="${scope.scope}"
+                           th:text="${scope.scope}"></label>
+                    <p class="text-primary" th:text="${scope.description}"></p>
+                </div>
+
+                <div class="pt-3">
+                    <button class="btn btn-primary btn-lg" type="submit" id="submit-consent">
+                        提交同意
+                    </button>
+                </div>
+                <div class="pt-3">
+                    <button class="btn btn-link regular" type="button" id="cancel-consent" onclick="cancelConsent();">
+                        取消
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col text-center">
+            <p>
+                <small>
+                    提供访问权限需要您的同意。<br/>
+                    如果您不批准，请点击取消，在这种情况下，不会与应用程序共享任何信息。
+                </small>
+            </p>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
