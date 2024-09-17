@@ -17,6 +17,7 @@
 //gradle 插件
 plugins {
     id 'java'
+//    id 'org.springframework.boot' version '3.3.3'
     id 'org.springframework.boot' version '3.2.0'
     id 'io.spring.dependency-management' version '1.1.6'
     //java包管理插件 没有这个插件就没有api命令
@@ -35,9 +36,15 @@ java {
     }
 }
 
-//ext {
+//"springBootVersion"   : "3.3.3",
+//"springCloudVersion"  : "2023.0.3",
+//"springBootVersion"   : "3.2.0",
+//"springCloudVersion"  : "2023.0.0",
+
+ext {
 //    set('springCloudVersion', '2023.0.3')
-//}
+    set('springCloudVersion', '2023.0.0')
+}
 apply {
     from('config.gradle')
 }
@@ -103,7 +110,7 @@ subprojects {
     dependencyManagement {
         // spring cloud依赖管理插件
         imports {
-            mavenBom("org.springframework.cloud:spring-cloud-dependencies:${rootProject.ext.version.springCloudVersion}")
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
         }
 
         //不受spring cloud管理的第三方依赖

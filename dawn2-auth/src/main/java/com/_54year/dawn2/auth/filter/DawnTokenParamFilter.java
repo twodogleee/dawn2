@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.oauth2.server.authorization.web.OAuth2TokenEndpointFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -23,10 +23,13 @@ import java.util.Map;
  * 全局拦截器 对请求参数进行改写 支持json参数认证
  *
  * @author Andersen
- * {@link SecurityFilterChain}
+ * {@link OAuth2TokenEndpointFilter}
  */
 @Slf4j
 public class DawnTokenParamFilter extends OncePerRequestFilter {
+
+    //token请求路径拦截
+    RequestMatcher requestMatcher = new AntPathRequestMatcher(DawnAuthUrl.TOKEN_URL, HttpMethod.POST.name());
 
     /**
      * 拦截方法执行
@@ -39,8 +42,6 @@ public class DawnTokenParamFilter extends OncePerRequestFilter {
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        //如果不需要处理则直接放行
-        RequestMatcher requestMatcher = new AntPathRequestMatcher(DawnAuthUrl.TOKEN_URL, HttpMethod.POST.name());
         if (!requestMatcher.matches(request)) {
             filterChain.doFilter(request, response);
             return;

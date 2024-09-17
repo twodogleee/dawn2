@@ -16,6 +16,11 @@ import org.springframework.security.web.authentication.AuthenticationConverter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 自定义grant_type初始化及相关依赖bean初始化
+ *
+ * @author Andersen
+ */
 public class DawnTokenEndpointSetting {
     /**
      * http安全配置
@@ -54,6 +59,12 @@ public class DawnTokenEndpointSetting {
         return new DawnTokenEndpointSetting(http, context);
     }
 
+    /**
+     * 初始化自定义的认证端点
+     *
+     * @return 过滤器链
+     * @throws Exception 异常信息
+     */
     public DefaultSecurityFilterChain build() throws Exception {
         //先将tokenEndpoint初始化到框架内
         this.oAuth2AuthorizationServerConfigurer.tokenEndpoint(

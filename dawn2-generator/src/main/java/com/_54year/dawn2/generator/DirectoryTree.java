@@ -14,6 +14,7 @@ public class DirectoryTree {
     public static void main(String[] args) {
         // 获取当前工作目录
         File currentDir = new File(System.getProperty("user.dir"));
+        System.out.println(currentDir.getAbsolutePath());
         // 指定要输出的层级
         int maxDepth = 2; // 可以根据需要调整层级
 
