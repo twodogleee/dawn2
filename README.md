@@ -2,13 +2,17 @@
 
 ## 简介
 
-整体项目采用目前新spring版本进行重新开发,项目管理换成gradle,并整合了最新的springOAuth2
+整体项目采用目前最新spring稳定版本进行重新开发,项目管理换成gradle,并整合了最新的springOAuth2
 
 - springBoot: 3.3.3
 - springCloud: 2023.0.3
 - springOauth2AuthorizationServer: 3.3.3
 - jdk:17
 
+## 项目仓库
+
+- 码云:主仓库.[dawn2](https://gitee.com/twodoglee/dawn2)
+- github:同步仓库,不定时同步.[dawn2](https://github.com/twodogleee/dawn2)
 
 ## 项目结构
 
@@ -28,5 +32,6 @@
 ## 其他说明
 
 ### dawn2-auth 认证模块
+
 认证模块只提供基础的oauth2 token下发流程,不做用户的权限校验等.
 则用户中心只保存最基本的用户信息,用户扩增信息及权限管理等由子模块提供,如果需要可自行实现.更详细的说明见`dawn2-auth/README`
