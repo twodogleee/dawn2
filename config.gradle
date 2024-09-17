@@ -10,7 +10,9 @@ ext {
             //mybatis plus 代码生成器
             "mybatisPlusGenerator": "3.5.7",
             //阿里json工具
-            "fastJson2"           : "2.0.52"
+            "fastJson2"           : "2.0.52",
+            //github findbugs的注解包
+            "spotbugsAnnotations": "4.8.6",
             //"mybatisVersion"    : "3.0.3",
     ]
 

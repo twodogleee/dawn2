@@ -1,6 +1,5 @@
 /**
- * dawn2 项目管理
- */
+ * dawn2 项目管理*/
 
 
 //buildscript {
@@ -16,9 +15,12 @@
 
 //gradle 插件
 plugins {
+    //java
     id 'java'
-//    id 'org.springframework.boot' version '3.3.3'
-    id 'org.springframework.boot' version '3.2.0'
+    //spring boot
+    id 'org.springframework.boot' version '3.3.3'
+//    id 'org.springframework.boot' version '3.2.0'
+    //spring boot包管理
     id 'io.spring.dependency-management' version '1.1.6'
     //java包管理插件 没有这个插件就没有api命令
     id 'java-library'
@@ -34,7 +36,10 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
+
 
 //"springBootVersion"   : "3.3.3",
 //"springCloudVersion"  : "2023.0.3",
@@ -42,16 +47,43 @@ java {
 //"springCloudVersion"  : "2023.0.0",
 
 ext {
-//    set('springCloudVersion', '2023.0.3')
-    set('springCloudVersion', '2023.0.0')
+    set('springCloudVersion', '2023.0.3')
+//    set('springCloudVersion', '2023.0.0')
 }
 apply {
     from('config.gradle')
 }
 
 //所有项目/子模块通用配置
-//必须要有该配置
-allprojects {
+//allprojects {
+//    group = 'com._54year'
+//    //引用插件
+//    apply {
+//        plugin('java')
+//        plugin('org.springframework.boot')
+//        plugin('io.spring.dependency-management')
+//        //java包管理插件
+//        plugin('java-library')
+//    }
+
+//gradle 配置
+//    configurations {
+//        //仅运行时生效
+//        compileOnly {
+//            extendsFrom annotationProcessor
+//        }
+//    }
+
+//仓库配置
+//    repositories {
+//        mavenLocal()
+//        mavenCentral()
+//    }
+//}
+
+//子模块/项目统一配置
+subprojects {
+
     group = 'com._54year'
     //引用插件
     apply {
@@ -62,23 +94,13 @@ allprojects {
         plugin('java-library')
     }
 
-    //gradle 配置
-//    configurations {
-//        //仅运行时生效
-//        compileOnly {
-//            extendsFrom annotationProcessor
-//        }
-//    }
-
     //仓库配置
     repositories {
         mavenLocal()
         mavenCentral()
     }
-}
 
-//子模块/项目统一配置
-subprojects {
+
     // 子模块依赖,类似于maven的dependencies标签
     //子项目强制依赖
     dependencies {
@@ -89,7 +111,17 @@ subprojects {
         implementation('org.apache.commons:commons-lang3')
         //ali json工具
         implementation("com.alibaba.fastjson2:fastjson2:${rootProject.ext.version.fastJson2}")
-
+        /*
+        com.github.spotbugs:spotbugs-annotations包依赖主要用来解决是用了@Nullable注解导致编译报错问题
+        如: [WARNING] 未知的枚举常量 javax.annotation.meta.When.MAYBE 原因: 找不到javax.annotation.meta.When的类文件
+        @Nullable
+        @Nullable 是一种用于标记 【方法参数】、【方法返回值】 、【字段】的注解，用于表示这些元素可以为null。
+        主要用于静态代码分析工具、IDE或其他工具来检测潜在的空指针异常问题。
+        @Nullable注解可以提高代码的可读性，并帮助静态代码分析工具识别潜在的空指针异常问题。
+        该注解只是一种提示，并不能完全消除空指针异常的发生。
+         */
+        // https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations
+        implementation("com.github.spotbugs:spotbugs-annotations:${rootProject.ext.version.spotbugsAnnotations}")
 
 //        runtimeOnly 'com.mysql:mysql-connector-j'
 //        runtimeOnly 'org.postgresql:postgresql'
@@ -145,8 +177,12 @@ subprojects {
         useJUnitPlatform()
     }
 
-    tasks.withType(JavaCompile) {
-        options.encoding = 'UTF-8'
+
+    //tasks.withType(JavaCompile)：选择所有类型为 JavaCompile 的任务。
+    //configureEach：确保每个任务在执行前都会被配置。
+    tasks.withType(JavaCompile).configureEach { task ->
+        task.options.encoding = 'UTF-8'
+        println "JavaCompile配置被执行,执行任务=>task: ${task.name}"
     }
 }
 

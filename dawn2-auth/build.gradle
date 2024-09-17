@@ -1,6 +1,13 @@
 //该模块版本
 version = '1.0.0'
 
+bootJar {
+    //包名
+    archiveBaseName = 'dawn2-auth'
+    //不指定会根据@SpringBootApplication 自动加载
+    mainClass = 'com._54year.dawn2.auth.Dawn2AuthApplication'
+}
+
 dependencies {
     implementation(project(':dawn2-db'))
     implementation(project(':dawn2-core'))
