@@ -65,9 +65,15 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
 }
 ```
 
+## dawn-auth实现功能
+
+- 自定义grant_type实现多种认证模式,可自行拓展
+- 手机验证码获取token
+- 支持json请求获取token
+
 ## 关键类说明
 
-### springOauth2框架自带
+### springOauth2框架自带类
 
 - `OAuth2EndpointUtils`:框架自带的工具类
 - `authorizationServerSecurityFilterChain`:服务器端点(就是过滤链的意思,通过过滤url路径实现的业务)
@@ -75,7 +81,7 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
 - `UsernamePasswordAuthenticationFilter`:框架自带的登陆流程实现,默认路径`/login`
 - `OAuth2AuthorizationCodeAuthenticationProvider`:框架自带的`authorization_code`授权码模式
 
-### dawn实现
+### dawn实现类
 
 > 自定义grant_type参照的是框架自带的`OAuth2AuthorizationCodeAuthenticationProvider`实现的authorization_code,
 > 具体逻辑可以参考源码
